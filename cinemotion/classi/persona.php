@@ -1,4 +1,5 @@
 <?php
+require_once 'film.php';
 class Persona
 {
     private $id;
@@ -96,7 +97,7 @@ class Persona
     {
         $out = "";
 
-        foreach($this->nazionalita as $item){
+        foreach ($this->nazionalita as $item) {
             $out .= $item . ", ";
         }
 
@@ -106,11 +107,13 @@ class Persona
         return $out;
     }
 
-    public function getNomeCompleto() {
+    public function getNomeCompleto()
+    {
         return $this->nome . ' ' . $this->cognome;
     }
 
-    public function getImmagineBase64() {
+    public function getImmagineBase64()
+    {
         return base64_encode($this->immagine);
     }
 
@@ -138,6 +141,78 @@ class Persona
 
         echo "$giorno $mese $anno";
     }
+
+    public function getFilmByRuolo($conn, $ruolo): array
+    {
+        $film = [];
+
+        $query = "
+            SELECT F.Id
+            FROM Film F
+            INNER JOIN $ruolo R ON R.id_film = F.Id
+            WHERE R.id_persona = {$this->id}
+        ";
+
+        $result = $conn->query($query);
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                try {
+                    $film[] = new Film($conn, $row['Id']);
+                } catch (Exception $e) {
+                    // Log eventuali film mancanti
+                }
+            }
+        }
+
+        return $film;
+    }
+
+    public function getNFilmByRuolo($conn, $ruolo) {
+        return count($this->getFilmByRuolo($conn, $ruolo));
+    }
+
+    public function printFilmByRuolo($conn, $ruolo, $baseurl)
+    {
+        $out = "";
+        foreach ($this->getFilmByRuolo($conn, $ruolo) as $film) {
+            $out .= $film->renderCard($baseurl);
+        }
+        return $out;
+    }
+
+    public function printAllFilms($conn)
+    {
+        $out = "";
+
+        if ($this->getNFilmByRuolo($conn, "Attore") > 0) {
+            $out .= "<div class='film-list' style='padding-left: 0'>
+                <h1>Film da attore</h1>
+                <div class='film-grid'>" .
+                    $this->printFilmByRuolo($conn, 'Attore', '../dettaglio_film')
+                    . "</div>
+                </div>";
+        }
+        if ($this->getNFilmByRuolo($conn, "Regista") > 0) {
+            $out .= "<div class='film-list' style='padding-left: 0'>
+                <h1>Film da regista</h1>
+                <div class='film-grid'>" .
+                    $this->printFilmByRuolo($conn, 'Regista', '../dettaglio_film')
+                    . "</div>
+                </div>";
+        }
+        if ($this->getNFilmByRuolo($conn, "Sceneggiatore") > 0) {
+            $out .= "<div class='film-list' style='padding-left: 0'>
+                <h1>Film da sceneggiatore</h1>
+                <div class='film-grid'>" .
+                    $this->printFilmByRuolo($conn, 'Sceneggiatore', '../dettaglio_film')
+                    . "</div>
+                </div>";
+        }
+
+        return $out;
+    }
+
 
     public function __toString()
     {

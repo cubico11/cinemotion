@@ -280,14 +280,15 @@ class Film
         $this->numero_recensioni = $numero_recensioni;
     }
 
-    public function renderCard(): string
+    //stampa scheda del film; baseurl è l'inizio del percorso relativo rispetto alla pagina che chiama la funzione
+    public function renderCard($baseurl): string
     {
         $titolo = htmlspecialchars($this->titolo);
         $media = generaStelle($this->media_voti);
 
         return "
         <div class='film'>
-            <a href='pages/dettaglio_film/dettaglio_film.php?id={$this->id}'>
+            <a href='$baseurl/dettaglio_film.php?id={$this->id}'>
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>
                 <div class='film-rating'>$media</div>

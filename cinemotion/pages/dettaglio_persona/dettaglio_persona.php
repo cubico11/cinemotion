@@ -30,6 +30,7 @@ include '../../funzioni.php';
                 <p><strong>Data nascita:</strong> <?php echo $persona->getDataNascitaTesto(); ?></p>
             </div>
         </div>
+        <?php echo $persona->printAllFilms($conn) ?>
     </main>
 
     <footer></footer>
