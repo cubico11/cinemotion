@@ -31,7 +31,7 @@ $repo = new FilmRepository($conn);
             <?php
             $popolari = $repo->getFilm("Media_Voti DESC");
             foreach ($popolari as $film) {
-                echo $film->renderCard();
+                echo $film->renderCard("pages/dettaglio_film");
             }
             ?>
         </div>
@@ -43,7 +43,7 @@ $repo = new FilmRepository($conn);
             <?php
             $nuovi = $repo->getFilm("Film.Data_Uscita DESC");
             foreach ($nuovi as $film) {
-                echo $film->renderCard();
+                echo $film->renderCard("pages/dettaglio_film");
             }
             ?>
         </div>
@@ -55,7 +55,7 @@ $repo = new FilmRepository($conn);
             <?php
             $famosi = $repo->getFilm("Numero_Recensioni DESC");
             foreach ($famosi as $film) {
-                echo $film->renderCard();
+                echo $film->renderCard("pages/dettaglio_film");
             }
             ?>
         </div>
