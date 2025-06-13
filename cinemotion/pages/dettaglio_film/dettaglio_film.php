@@ -1,5 +1,5 @@
 <?php
-include 'funzioni_dettaglio.php';
+include 'funzioni_dettaglio_film.php';
 include '../../funzioni.php';
 ?>
 
@@ -41,7 +41,6 @@ include '../../funzioni.php';
             backdrop-filter: blur(0px);
             /* opzionale */
         }
-    </style>
     </style>
 </head>
 

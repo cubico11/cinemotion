@@ -118,12 +118,8 @@ class Film
 
                 if (!isset($persone[$id])) {
                     $persone[$id] = new Persona(
-                        $row['id'],
-                        $row['nome'],
-                        $row['cognome'],
-                        $row['immagine'],
-                        $row['data_nascita'],
-                        [] // inizialmente vuoto
+                        $conn,
+                        $row['id']
                     );
                 }
 
