@@ -181,45 +181,13 @@ class Persona
         return $out;
     }
 
-    public function printAllFilms($conn)
-    {
-        $out = "";
-
-        if ($this->getNFilmByRuolo($conn, "Attore") > 0) {
-            $out .= "<div class='film-list' style='padding-left: 0'>
-                <h1>Film da attore</h1>
-                <div class='film-grid'>" .
-                    $this->printFilmByRuolo($conn, 'Attore', '../dettaglio_film')
-                    . "</div>
-                </div>";
-        }
-        if ($this->getNFilmByRuolo($conn, "Regista") > 0) {
-            $out .= "<div class='film-list' style='padding-left: 0'>
-                <h1>Film da regista</h1>
-                <div class='film-grid'>" .
-                    $this->printFilmByRuolo($conn, 'Regista', '../dettaglio_film')
-                    . "</div>
-                </div>";
-        }
-        if ($this->getNFilmByRuolo($conn, "Sceneggiatore") > 0) {
-            $out .= "<div class='film-list' style='padding-left: 0'>
-                <h1>Film da sceneggiatore</h1>
-                <div class='film-grid'>" .
-                    $this->printFilmByRuolo($conn, 'Sceneggiatore', '../dettaglio_film')
-                    . "</div>
-                </div>";
-        }
-
-        return $out;
-    }
-
 
     public function __toString()
     {
         return "
         <div class='persona'>
             <a href='../dettaglio_persona/dettaglio_persona.php?id={$this->id}'>
-                <img src='data:image/jpeg;base64," . $this->getImmagineBase64() . "' alt='Attore'>
+                <img src='data:image/jpeg;base64," . $this->getImmagineBase64() . "' alt='Persona'>
                 <div class='persona-info'>
                     <strong>" . htmlspecialchars($this->getNomeCompleto()) . "</strong><br>
                 </div>
