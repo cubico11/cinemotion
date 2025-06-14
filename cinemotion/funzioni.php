@@ -34,4 +34,17 @@ function generaStelle($n): string
 
     return $stelle;
 }
+
+function echoHeader($baseurl){
+    echo "<header>".
+        //l'immagine linka alla home solo se non si è nella home
+        (($baseurl != "") ? "<a href=\"$baseurl\">" : "") . "<div class=\"logo\"><img src=\"".$baseurl."img/logo_text.png\"></div>" . (($baseurl != "") ? "</a>" : "");
+    if (!isset($_SESSION['username'])) {
+        echo "<div> <a href=\"".$baseurl."pages/login/pagina_login.php\"><button class=\"login-btn\">Login</button></a> <a href=\"".$baseurl."/pages/register/pagina_register.php\"><button class=\"register-btn\">Registrati</button></a> </div>";
+    }
+    else{
+        echo "<a href=\"".$baseurl."logout.php\" class=\"logout\">Logout</a> <div class=\"profile-icon\">" . $_SESSION['username'] . "</div>";
+    }
+    echo "</header>";
+}
 ?>

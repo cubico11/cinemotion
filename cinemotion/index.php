@@ -4,6 +4,7 @@ require_once 'classi/film.php';
 require_once 'classi/recensione.php';
 require_once 'classi/filmrepository.php';
 require_once 'funzioni.php';
+session_start();
 
 $repo = new FilmRepository($conn);
 ?>
@@ -20,10 +21,7 @@ $repo = new FilmRepository($conn);
 </head>
 
 <body>
-    <header>
-        <div class="logo"><img src="img/logo_text.png"></div>
-        <div class="profile-icon"></div>
-    </header>
+    <?php echoHeader(""); ?>
 
     <div class="film-list" id="popular-films">
         <h1>Film migliori</h1>

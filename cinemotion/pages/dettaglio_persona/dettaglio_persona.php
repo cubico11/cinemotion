@@ -15,10 +15,7 @@ include '../../funzioni.php';
 
 <body onload="attivaPrimoBottone()">
     <div class="bg-image"></div>
-    <header>
-        <div class="logo"><a href="../../"><img src="../../img/logo_text.png"></div></a>
-        <div class="profile-icon"></div>
-    </header>
+    <?php echoHeader("../../"); ?>
 
     <main>
         <div class="person-detail">

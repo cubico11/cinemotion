@@ -253,29 +253,32 @@ footer {
     border-top: 1px solid #333;
 }
 
-.toggle-buttons {
-    margin: 30px 0 10px;
-}
-
-.toggle-buttons button {
-    background-color: #333;
+button {
+    background-color: #29654F;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.1s ease;
     font-weight: bold;
-    font-size: 1.1em;
 }
 
-.toggle-buttons button:hover {
-    background-color: #555;
+button:hover {
+    background-color: #204f3e;
 }
 
-.toggle-buttons button.active {
-    background-color: #29654F;
+button.active {
+    background-color: #389B77;
     color: white;
+}
+
+.toggle-buttons {
+    margin: 30px 0 10px;
+}
+
+.toggle-buttons button {
+    font-size: 1.1em;
 }
 
 .staff {
@@ -339,4 +342,48 @@ footer {
 
 .person-films-list #toggle-buttons {
     margin-top: 10px;
+}
+
+.container-login, .container-register {
+    width: 420px;
+    margin: auto auto;
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 24px 32px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.container-login a, .container-register a {
+    text-decoration: underline;
+    color: #389B77;
+}
+
+.container-login h2, .container-register h2 {
+    font-size: 2.8em;
+    margin-bottom: 25px;
+    margin-top: 21px;
+    color: #389B77;
+}
+
+.container-login input[type="text"],
+.container-register input[type="text"],
+.container-login input[type="password"],
+.container-register input[type="password"],
+.container-login input[type="email"],
+.container-register input[type="email"] {
+    margin: 3px;
+    padding: 4px;
+    border-radius: 8px;
+    background-color: rgb(36, 36, 36);
+    color:#fff;
+    font-size: 1em;
+}
+
+.container-login button,
+.container-register button {
+    margin-top: 13px;
+    margin-bottom: 4px;
+    font-size: 0.8em;
 }
