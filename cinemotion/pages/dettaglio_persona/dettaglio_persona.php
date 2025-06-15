@@ -1,6 +1,6 @@
 <?php
-include 'funzioni_dettaglio_persona.php';
-include '../../funzioni.php';
+require_once 'funzioni_dettaglio_persona.php';
+require_once '../../funzioni.php';
 session_start();
 ?>
 
