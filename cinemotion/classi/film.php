@@ -67,7 +67,7 @@ class Film
 
     public function getInfoRecensioni()
     {
-        $msg = "Nessuna recensione presente.";
+        $msg = "<b>Nessuna recensione presente.</b>";
 
         //stampa "Recensione" se ce n'è una sola, altrimenti "Recensioni"
         $parolaRecensione = ($this->numero_recensioni == 1) ? ' recensione' : ' recensioni';
@@ -154,7 +154,9 @@ class Film
 
         $output = "";
         foreach ($this->personePerRuolo[$ruolo] as $item) {
-            $output .= "<div class='persona-wrapper'>";
+            $output .= "<div class='persona-wrapper";
+            $output .= ($ruolo == "Attore") ? " actor" : "";
+            $output .= "'>";
             $output .= $item->__toString();
             $output .= ($ruolo === "Attore") ? "<div class='persona-ruolo'>" . htmlspecialchars($item->getRuoloNelFilm($this->id)) . "</div>" : "";
             $output .= "</div>";

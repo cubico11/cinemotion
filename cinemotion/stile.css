@@ -57,7 +57,7 @@ main {
     padding-left: 35px;
     padding-right: 35px;
     margin: 2rem 0;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
     color: #fff;
 }
 
@@ -230,6 +230,7 @@ h2 {
 }
 
 .review em {
+    font-size: 0.75em;
     font-style: italic;
     font-weight: normal;
     color: #aaa;
@@ -239,6 +240,10 @@ h2 {
     border: 0;
     border-top: 1px solid #444;
     margin-top: 1rem;
+}
+
+.nome-account {
+    font-size: 1.2em;
 }
 
 .testo-recensione {
@@ -312,8 +317,8 @@ button.active {
     transition: 0.15s ease;
 }
 
-#cast .persona-wrapper {
-    height: 270px;
+.actor {
+    height: 280px;
 }
 
 .persona-wrapper:hover {

@@ -94,7 +94,7 @@ class Recensione
     {
         $msg = "
             <div class='review'>
-                <p class='dati-recensione'><strong>" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
+                <p class='dati-recensione'><strong class=\"nome-account\">" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
                 <em>" . htmlspecialchars($this->data) . "</em></p>
                 <strong>" . generaStelle($this->voto) . "</strong>" ;
                 $msg .= ($this->testo != "") ? "<hr>" : "";
