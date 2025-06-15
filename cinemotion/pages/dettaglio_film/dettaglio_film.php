@@ -35,8 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
                                  VALUES (CURDATE(), $voto, '$testo', $id_film, $id_utente)";
 
                     if ($conn->query($query_insert)) {
-                        header("Location: " . $_SERVER['REQUEST_URI']);
-                        echo "<script>alert('Recensione pubblicata con successo!');</script>";
+                        echo "<script>
+                            alert('Recensione pubblicata con successo.');
+                            window.location.href = 'dettaglio_film.php?id=".$_GET['id']."';
+                        </script>";
                     } else {
                         echo "<script>alert('Errore durante l\'inserimento della recensione.');</script>";
                     }
@@ -66,8 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             // Cancella la recensione
             $query_delete = "DELETE FROM Recensione WHERE Id = $id_recensione AND Id_Utente = $id_utente";
             if ($conn->query($query_delete)) {
-                header("Location: " . $_SERVER['REQUEST_URI']);
-                echo "<script>alert('Recensione eliminata.'); location.reload();</script>";
+                echo "<script>
+                        alert('Recensione eliminata.');
+                        window.location.href = 'dettaglio_film.php?id=".$_GET['id']."';
+                    </script>";
             } else {
                 echo "<script>alert('Errore durante l\'eliminazione.');</script>";
             }
