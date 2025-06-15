@@ -1,5 +1,7 @@
 <?php
-include '../../funzioni.php';
+require_once '../../funzioni.php';
+require_once '../../funzioni_connessione.php';
+
 session_start();
 
 if (isset($_SESSION['username'])) {

@@ -35,6 +35,15 @@ function generaStelle($n): string
     return $stelle;
 }
 
+// funzione che restituisce true se l'username passatogli come paramentro è lo stesso dell'utente loggato
+function isThisUserLogged(string $user): bool {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return isset($_SESSION['username']) && strcasecmp($user, $_SESSION['username']) === 0;
+}
+
 function echoHeader($baseurl, $conn){
     echo "<header>".
         //l'immagine linka alla home solo se non si è nella home
@@ -43,12 +52,9 @@ function echoHeader($baseurl, $conn){
         echo "<div> <a href=\"".$baseurl."pages/login/pagina_login.php\"><button class=\"login-btn\">Login</button></a> <a href=\"".$baseurl."pages/register/pagina_register.php\"><button class=\"register-btn\">Registrati</button></a> </div>";
     }
     else{
-        $result = $conn->query("SELECT Username FROM users WHERE Username = \"" . $_SESSION['username'] . "\"");
-        if ($result && $row = $result->fetch_assoc()) {
-            $username = $row['Username'];
-            
-            echo "<div class=\"user-info\"> <a href=\"".$baseurl."logout.php\"><button class=\"logout-btn\">Logout</button></a>" . $username . "</div>";
-        }
+        $utente = Utente::fromUsername($conn, $_SESSION['username']);
+
+        echo "<div class=\"user-info\"> <a href=\"".$baseurl."logout.php\"><button class=\"logout-btn\">Logout</button></a>" . $utente->getUsername() . "</div>";
     }
     echo "</header>";
 }

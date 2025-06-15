@@ -8,6 +8,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-size: 20px;
 }
 
 a {
@@ -89,7 +90,7 @@ h2 {
 
 .film {
     width: 160px;
-    height: 310px;
+    height: 330px;
     flex: 0 0 auto;
     background-color: #1f1f1f;
     border-radius: 8px;
@@ -191,7 +192,7 @@ h2 {
 }
 
 /* Recensioni */
-#reviews {
+#reviews-container {
     margin-top: 2rem;
     padding: 2rem;
     background-color: #181818;
@@ -199,7 +200,7 @@ h2 {
     border: 1px solid #333;
 }
 
-#reviews h2 {
+#reviews-container h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     color: #ffffff;
@@ -207,7 +208,7 @@ h2 {
 
 .reviews-info {
     font-size: 2em;
-    padding-bottom: 25px;
+    padding-bottom: 5px;
 }
 
 .review {
@@ -221,7 +222,6 @@ h2 {
 }
 
 .review p {
-    margin: 0.5rem 0;
     line-height: 1.4;
 }
 
@@ -239,6 +239,15 @@ h2 {
     border: 0;
     border-top: 1px solid #444;
     margin-top: 1rem;
+}
+
+.testo-recensione {
+    margin: 0px;
+}
+
+.dati-recensione {
+    margin: 0.2rem 0;
+    margin-bottom: 0;
 }
 
 /* Footer */
@@ -350,7 +359,6 @@ button.active {
     padding: 24px 32px;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
     text-align: center;
-    font-size: 1.3em;
 }
 
 .container-login a, .container-register a {
@@ -410,4 +418,39 @@ button.active {
     height: 200px;
     max-height: 350px;
     min-height: 120px;
+    border: 2px solid #444;
+    font-size: 0.85em;
+    font-family: Arial, sans-serif;
+}
+
+#form-recensione input {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-radius: 3px;
+    border: 2px solid #444;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+#charcount {
+    font-size: 0.7em;
+}
+
+.charcount-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#form-recensione {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #ddd;
+}
+
+#reviews {
+    padding-top: 5px;
 }

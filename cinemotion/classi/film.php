@@ -1,6 +1,8 @@
 <?php
 require_once 'recensione.php';
 require_once 'persona.php';
+require_once __DIR__ . '\..\funzioni.php';
+
 class Film
 {
     private $id;
@@ -49,23 +51,22 @@ class Film
     // Metodo che carica le recensioni
     private function caricaRecensioni($conn)
     {
-        $query = "SELECT Id, Data, Voto, Testo, Id_Utente FROM Recensione WHERE Id_Film = $this->id";
+        $query = "SELECT Id FROM Recensione WHERE Id_Film = $this->id";
         $result = $conn->query($query);
 
         while ($row = $result->fetch_assoc()) {
-            $recensione = new recensione(
-                $row['Id'],
-                $row['Data'],
-                $row['Voto'],
-                $row['Testo'],
-                $row['Id_Utente'],
-                $this->id
-            );
-            $this->recensioni[] = $recensione;
+            $recensione = new Recensione($conn, $row['Id']);
+            if (!isset($_SESSION['username']) !== null && isThisUserLogged($recensione->getUtente()->getUsername())) {
+                array_unshift($this->recensioni, $recensione); // Prima quelle dell'utente loggato
+            } else {
+                $this->recensioni[] = $recensione;
+            }
         }
     }
 
-    public function getInfoRecensioni(){
+
+    public function getInfoRecensioni()
+    {
         $msg = "Nessuna recensione presente.";
 
         //stampa "Recensione" se ce n'è una sola, altrimenti "Recensioni"

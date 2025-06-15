@@ -1,6 +1,7 @@
 <?php
-session_start();
 require_once '../../funzioni_connessione.php';
+
+session_start();
 
 $username = test_input($_POST['username'] ?? '');
 $password = $_POST['password'] ?? '';

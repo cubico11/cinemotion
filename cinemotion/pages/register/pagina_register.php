@@ -1,5 +1,7 @@
 <?php
 include '../../funzioni.php';
+require_once '../../funzioni_connessione.php';
+
 session_start();
 
 if (isset($_SESSION['username'])) {
@@ -28,7 +30,7 @@ if (isset($_SESSION['username'])) {
             <input type="text" name="username" placeholder="Username" required /><br>
             <input type="email" name="email" placeholder="Email" required /><br>
             <input type="password" name="password" placeholder="Password" required /><br>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required /><br>
+            <input type="password" name="confirm_password" placeholder="Conferma Password" required /><br>
             <button type="submit">Registrati</button>
         </form>
         <p class="light">Già registrato? <a href="../login/pagina_login.php">Effettua il login</a>.</p>
