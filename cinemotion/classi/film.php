@@ -82,6 +82,7 @@ class Film
     // GETTER per recensioni
     public function getRecensioni()
     {
+        $msg = "";
         if (!empty($this->recensioni)) {
             $msg = "<h2>Recensioni: </h2>";
             foreach ($this->recensioni as $rec) {
