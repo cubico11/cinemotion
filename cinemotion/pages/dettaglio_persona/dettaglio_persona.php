@@ -1,6 +1,7 @@
 <?php
 include 'funzioni_dettaglio_persona.php';
 include '../../funzioni.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +16,7 @@ include '../../funzioni.php';
 
 <body onload="attivaPrimoBottone()">
     <div class="bg-image"></div>
-    <?php echoHeader("../../"); ?>
+    <?php echoHeader("../../", $conn); ?>
 
     <main>
         <div class="person-detail">
@@ -31,13 +32,13 @@ include '../../funzioni.php';
         <div id="toggle-buttons" class="toggle-buttons">
             <?php
             if ($persona->getNFilmByRuolo($conn, "Attore") > 0) {
-                echo "<button id='btn-attore' onclick='showSection(\"attore\", this)'>Film da attore</button>";
+                echo "<button id='btn-attore' onclick='showSection(\"attore\", this)'>Film da attore</button> ";
             }
             if ($persona->getNFilmByRuolo($conn, "Regista") > 0) {
-                echo "<button id='btn-regista' onclick='showSection(\"regista\", this)'>Film da regista</button>";
+                echo "<button id='btn-regista' onclick='showSection(\"regista\", this)'>Film da regista</button> ";
             }
             if ($persona->getNFilmByRuolo($conn, "Sceneggiatore") > 0) {
-                echo "<button id='btn-sceneggiatore' onclick='showSection(\"sceneggiatore\", this)'>Film da sceneggiatore</button>";
+                echo "<button id='btn-sceneggiatore' onclick='showSection(\"sceneggiatore\", this)'>Film da sceneggiatore</button> ";
             }
             ?>
         </div>

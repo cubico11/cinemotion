@@ -21,7 +21,7 @@ $repo = new FilmRepository($conn);
 </head>
 
 <body>
-    <?php echoHeader(""); ?>
+    <?php echoHeader("", $conn); ?>
 
     <div class="film-list" id="popular-films">
         <h1>Film migliori</h1>

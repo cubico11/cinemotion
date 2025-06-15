@@ -18,8 +18,7 @@ class Film
     {
         $this->id = intval($id_film);
 
-        $query = "
-            SELECT Film.Titolo, Film.Immagine, Film.Durata, Film.Data_Uscita, Film.Descrizione,
+        $query = "SELECT Film.Titolo, Film.Immagine, Film.Durata, Film.Data_Uscita, Film.Descrizione,
                    AVG(Recensione.Voto) AS Media_Voti,
                    COUNT(Recensione.Id) AS Numero_Recensioni
             FROM Film
@@ -66,18 +65,24 @@ class Film
         }
     }
 
-    // GETTER per recensioni
-    public function getRecensioni()
-    {
+    public function getInfoRecensioni(){
         $msg = "Nessuna recensione presente.";
 
         //stampa "Recensione" se ce n'è una sola, altrimenti "Recensioni"
         $parolaRecensione = ($this->numero_recensioni == 1) ? ' recensione' : ' recensioni';
 
         if (!empty($this->recensioni)) {
-            $msg = "<div class='reviews-info'> <b>" . $this->numero_recensioni . "</b>" . $parolaRecensione .
-                "<br> Media voti: " . generaStelle($this->media_voti) . "</div>
-            <h2>Recensioni: </h2>";
+            $msg = "<b>" . $this->numero_recensioni . "</b>" . $parolaRecensione .
+                "<br> Media voti: " . generaStelle($this->media_voti);
+        }
+        return $msg;
+    }
+
+    // GETTER per recensioni
+    public function getRecensioni()
+    {
+        if (!empty($this->recensioni)) {
+            $msg = "<h2>Recensioni: </h2>";
             foreach ($this->recensioni as $rec) {
                 $msg .= $rec->__toString();
             }

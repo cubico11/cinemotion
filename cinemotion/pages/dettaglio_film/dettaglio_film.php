@@ -1,6 +1,7 @@
 <?php
 include 'funzioni_dettaglio_film.php';
 include '../../funzioni.php';
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +47,7 @@ include '../../funzioni.php';
 
 <body>
     <div class="bg-image"></div>
-    <?php echoHeader("../../"); ?>
+    <?php echoHeader("../../", $conn); ?>
 
     <main>
         <div class="film-detail">
@@ -69,6 +70,16 @@ include '../../funzioni.php';
             <button id="btn-sceneggiatori" onclick="showSection('sceneggiatori', this)">Sceneggiatori</button>
         </div>
         <div class="toggle-section" id="reviews">
+            <div class='reviews-info'>
+                <?php echo $film->getInfoRecensioni(); ?>
+            </div>
+            <hr>
+            <form id="recensione" action="pubblica_recensione.php">
+                <h2>Inserisci una recensione:</h2>
+                <textarea name="recensione" id="text-recensione"></textarea> <br>
+                <button type="submit" style="margin-top: 12px">Pubblica</button>
+            </form>
+            <hr>
             <?php echo $film->getRecensioni(); ?>
         </div>
         <div id="cast" class="toggle-section staff" style="display: none;">

@@ -20,7 +20,7 @@ if (isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <?php echoHeader("../../"); ?>
+    <?php echoHeader("../../", $conn); ?>
     
     <div class="container-login">
         <h2>Login</h2>
@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
             <input type="password" name="password" placeholder="Password" required /><br>
             <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <a href="../register/pagina_register.php">Register here</a>.</p>
+        <p class="light">Non hai un account? <a href="../register/pagina_register.php">Registrati qui</a>.</p>
         <?php
         if (isset($_GET['error'])) {
             echo "<div class='error'>" . htmlspecialchars($_GET['error']) . "</div>";
