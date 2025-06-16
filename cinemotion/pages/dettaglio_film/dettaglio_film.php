@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
                     if ($conn->query($query_insert)) {
                         echo "<script>
                             alert('Recensione pubblicata con successo.');
-                            window.location.href = 'dettaglio_film.php?id=".$_GET['id']."';
+                            window.location.href = 'dettaglio_film.php?id=" . $_GET['id'] . "';
                         </script>";
                     } else {
                         echo "<script>alert('Errore durante l\'inserimento della recensione.');</script>";
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             if ($conn->query($query_delete)) {
                 echo "<script>
                         alert('Recensione eliminata.');
-                        window.location.href = 'dettaglio_film.php?id=".$_GET['id']."';
+                        window.location.href = 'dettaglio_film.php?id=" . $_GET['id'] . "';
                     </script>";
             } else {
                 echo "<script>alert('Errore durante l\'eliminazione.');</script>";
@@ -79,6 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             echo "<script>alert('Utente non valido.');</script>";
         }
     }
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_SESSION['username'])) {
+    header("Location: ../login/pagina_login.php");
 }
 
 ?>
