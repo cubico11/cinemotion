@@ -22,9 +22,7 @@ class FilmRepository
 
         $films = [];
         while ($row = $result->fetch_assoc()) {
-            if(!($orderBy == "Media_Voti DESC" && $row['Media_Voti'] == null)){
-                $films[] = new Film($this->conn, $row['Id']);
-            }
+            $films[] = new Film($this->conn, $row['Id']);
         }
 
         return $films;

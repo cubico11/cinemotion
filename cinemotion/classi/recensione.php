@@ -1,5 +1,6 @@
 <?php
 require_once 'utente.php';
+require_once 'emozione.php';
 
 class Recensione
 {
@@ -9,6 +10,7 @@ class Recensione
     private string $testo;
     private Utente $utente;
     private int $idFilm;
+    private Emozione $emozione;
 
     public function __construct(mysqli $conn, int $id)
     {
@@ -23,6 +25,7 @@ class Recensione
             $this->testo = $row['Testo'];
             $this->idFilm = (int) $row['Id_Film'];
             $this->utente = new Utente($conn, $row['Id_Utente']);
+            $this->emozione = new Emozione($conn, $row['Id_Emozione']);
         } else {
             throw new Exception("Recensione non trovata");
         }
@@ -59,6 +62,11 @@ class Recensione
         return $this->idFilm;
     }
 
+    public function getEmozione(): Emozione
+    {
+        return $this->emozione;
+    }
+
     // Setter
     public function setId(int $id): void
     {
@@ -90,13 +98,19 @@ class Recensione
         $this->idFilm = $idFilm;
     }
 
+    public function setEmozione(Emozione $emozione): void
+    {
+        $this->emozione = $emozione;
+    }
+
     public function __toString(): string
     {
         $msg = "
             <div class='review'>
                 <p class='dati-recensione'><strong class=\"nome-account\">" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
                 <em>" . htmlspecialchars($this->data) . "</em></p>
-                <strong>" . generaStelle($this->voto) . "</strong>" ;
+                <strong>" . generaStelle($this->voto) . "</strong>&emsp;
+                <strong>" . $this->emozione->getDenominazione() . "</strong>" ;
                 $msg .= ($this->testo != "") ? "<hr>" : "";
                 $msg .= "<p class='testo-recensione'>" . nl2br(htmlspecialchars($this->testo)) . "</p>";
 

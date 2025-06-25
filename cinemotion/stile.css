@@ -90,7 +90,7 @@ h2 {
 
 .film {
     width: 160px;
-    height: 330px;
+    height: 350px;
     flex: 0 0 auto;
     background-color: #1f1f1f;
     border-radius: 8px;
@@ -124,6 +124,11 @@ h2 {
 .film-rating {
     font-size: 0.9rem;
     color: #cccccc;
+}
+
+.film-emotion {
+    margin-top: 10px;
+    font-size: 0.9rem;
 }
 
 /* Dettaglio Film */
@@ -458,4 +463,13 @@ button.active {
 
 #reviews {
     padding-top: 5px;
+}
+
+select {
+    background-color: #1e1e1e;
+    color: white;
+    border-radius: 3px;
+    border: 2px solid #444;
+    margin-bottom: 10px;
+    font-size: 1rem;
 }

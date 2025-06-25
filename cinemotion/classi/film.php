@@ -15,6 +15,8 @@ class Film
     private $descrizione;
     private $recensioni = [];
     private $personePerRuolo = [];
+    private array $emozioni_top = [];
+
 
     public function __construct($conn, $id_film)
     {
@@ -46,6 +48,7 @@ class Film
         $this->caricaPersone($conn, "Attore");
         $this->caricaPersone($conn, "Regista");
         $this->caricaPersone($conn, "Sceneggiatore");
+        $this->caricaEmozioniTop($conn);
     }
 
     // Metodo che carica le recensioni
@@ -64,6 +67,50 @@ class Film
         }
     }
 
+    private function caricaEmozioniTop($conn)
+    {
+        $query = "
+        SELECT e.Id, e.Denominazione, COUNT(*) AS Totale
+        FROM Emozione e
+        JOIN Recensione r ON e.id = r.id_emozione
+        WHERE r.Id_Film = $this->id
+        GROUP BY e.Id
+        ORDER BY Totale DESC
+        LIMIT 3
+    ";
+
+        $result = $conn->query($query);
+        if ($result) {
+            $i = 0;
+            while ($row = $result->fetch_assoc()) {
+                $this->emozioni_top[] = new Emozione($conn, $row['Id']);
+            }
+        }
+    }
+
+    public function getEmozioniTop(): array
+    {
+        return $this->emozioni_top;
+    }
+
+    public function stampaEmozioniTop(int $n=3): string
+    {
+        $msg = "";
+        $i=0;
+        foreach($this->emozioni_top as $emozione){
+            $msg .= $emozione->getDenominazione() . ", ";
+            if (++$i == $n) break;
+        }
+        $msg = substr($msg, 0, -2);
+        return $msg;
+    }
+
+    public function setEmozioniTop(array $emozioni): void
+    {
+        $this->emozioni_top = $emozioni;
+    }
+
+
 
     public function getInfoRecensioni()
     {
@@ -74,7 +121,8 @@ class Film
 
         if (!empty($this->recensioni)) {
             $msg = "<b>" . $this->numero_recensioni . "</b>" . $parolaRecensione .
-                "<br> Media voti: " . generaStelle($this->media_voti);
+                "<br> Media voti: " . generaStelle($this->media_voti) .
+                "<br> Emozioni più selezionate: <b>" . $this->stampaEmozioniTop() . "</b>";
         }
         return $msg;
     }
@@ -300,6 +348,7 @@ class Film
             <a href='$baseurl/dettaglio_film.php?id={$this->id}'>
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>
+                <div class='film-emotion'>".$this->stampaEmozioniTop(1)."</div>
                 <div class='film-rating'>$media</div>
             </a>
         </div>

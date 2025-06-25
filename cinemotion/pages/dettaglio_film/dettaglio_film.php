@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
         $voto = isset($_POST['voto']) ? intval($_POST['voto'] * 2) : null;
         $testo = isset($_POST['recensione']) ? trim($_POST['recensione']) : null;
         $id_film = isset(($_GET['id'])) ? intval(($_GET['id'])) : null;
+        $id_emozione = isset(($_POST['emozione'])) ? intval(($_POST['emozione'])) : null;
 
         if ($voto !== null && $id_film !== null) {
             $username = $conn->real_escape_string($_SESSION['username']);
@@ -31,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
 
                 if ($result_check && $result_check->num_rows == 0) {
                     $testo = $conn->real_escape_string($testo);
-                    $query_insert = "INSERT INTO Recensione (Data, Voto, Testo, Id_Film, Id_Utente)
-                                 VALUES (CURDATE(), $voto, '$testo', $id_film, $id_utente)";
+                    $query_insert = "INSERT INTO Recensione (Data, Voto, Testo, Id_Film, Id_Utente, Id_Emozione)
+                                 VALUES (CURDATE(), $voto, '$testo', $id_film, $id_utente, $id_emozione)";
 
                     if ($conn->query($query_insert)) {
                         echo "<script>
@@ -157,7 +158,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             <form id="form-recensione" action="" method="POST">
                 <input type="hidden" name="action" value="inserisci_recensione">
                 <h2>Inserisci una recensione:</h2>
-                Voto: <input type="number" name="voto" required min="0,5" step=".5" max="5">
+                Voto: <input type="number" name="voto" required min="0,5" step=".5" max="5"> </br>
+                Emozione: <select name="emozione">
+                    <?php $result = $conn->query("SELECT id, denominazione FROM emozione");
+                    while($row = $result->fetch_assoc()) {
+                        echo "<option value=\"".$row['id']."\">".$row['denominazione']."</option>";
+                    } ?>
+                </select>
                 <textarea name="recensione" id="text-recensione" maxlength="1000"
                     onkeyup="charcountupdate(this.value)"></textarea>
                 <div class="charcount-container"><span id="charcount" class="light"></span></div>
