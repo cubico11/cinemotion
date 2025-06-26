@@ -1,6 +1,8 @@
 <?php
 require_once 'recensione.php';
 require_once 'persona.php';
+require_once __DIR__ . '\..\funzioni.php';
+
 class Film
 {
     private $id;
@@ -13,13 +15,14 @@ class Film
     private $descrizione;
     private $recensioni = [];
     private $personePerRuolo = [];
+    private array $emozioni_top = [];
+
 
     public function __construct($conn, $id_film)
     {
         $this->id = intval($id_film);
 
-        $query = "
-            SELECT Film.Titolo, Film.Immagine, Film.Durata, Film.Data_Uscita, Film.Descrizione,
+        $query = "SELECT Film.Titolo, Film.Immagine, Film.Durata, Film.Data_Uscita, Film.Descrizione,
                    AVG(Recensione.Voto) AS Media_Voti,
                    COUNT(Recensione.Id) AS Numero_Recensioni
             FROM Film
@@ -45,39 +48,91 @@ class Film
         $this->caricaPersone($conn, "Attore");
         $this->caricaPersone($conn, "Regista");
         $this->caricaPersone($conn, "Sceneggiatore");
+        $this->caricaEmozioniTop($conn);
     }
 
     // Metodo che carica le recensioni
     private function caricaRecensioni($conn)
     {
-        $query = "SELECT Id, Data, Voto, Testo, Id_Utente FROM Recensione WHERE Id_Film = $this->id";
+        $query = "SELECT Id FROM Recensione WHERE Id_Film = $this->id";
         $result = $conn->query($query);
 
         while ($row = $result->fetch_assoc()) {
-            $recensione = new recensione(
-                $row['Id'],
-                $row['Data'],
-                $row['Voto'],
-                $row['Testo'],
-                $row['Id_Utente'],
-                $this->id
-            );
-            $this->recensioni[] = $recensione;
+            $recensione = new Recensione($conn, $row['Id']);
+            if (!isset($_SESSION['username']) !== null && isThisUserLogged($recensione->getUtente()->getUsername())) {
+                array_unshift($this->recensioni, $recensione); // Prima quelle dell'utente loggato
+            } else {
+                $this->recensioni[] = $recensione;
+            }
         }
     }
 
-    // GETTER per recensioni
-    public function getRecensioni()
+    private function caricaEmozioniTop($conn)
     {
-        $msg = "Nessuna recensione presente.";
+        $query = "
+        SELECT e.Id, e.Denominazione, COUNT(*) AS Totale
+        FROM Emozione e
+        JOIN Recensione r ON e.id = r.id_emozione
+        WHERE r.Id_Film = $this->id
+        GROUP BY e.Id
+        ORDER BY Totale DESC
+        LIMIT 3
+    ";
+
+        $result = $conn->query($query);
+        if ($result) {
+            $i = 0;
+            while ($row = $result->fetch_assoc()) {
+                $this->emozioni_top[] = new Emozione($conn, $row['Id']);
+            }
+        }
+    }
+
+    public function getEmozioniTop(): array
+    {
+        return $this->emozioni_top;
+    }
+
+    public function stampaEmozioniTop(int $n=3): string
+    {
+        $msg = "";
+        $i=0;
+        foreach($this->emozioni_top as $emozione){
+            $msg .= $emozione->getDenominazione() . ", ";
+            if (++$i == $n) break;
+        }
+        $msg = substr($msg, 0, -2);
+        return $msg;
+    }
+
+    public function setEmozioniTop(array $emozioni): void
+    {
+        $this->emozioni_top = $emozioni;
+    }
+
+
+
+    public function getInfoRecensioni()
+    {
+        $msg = "<b>Nessuna recensione presente.</b>";
 
         //stampa "Recensione" se ce n'è una sola, altrimenti "Recensioni"
         $parolaRecensione = ($this->numero_recensioni == 1) ? ' recensione' : ' recensioni';
 
         if (!empty($this->recensioni)) {
-            $msg = "<div class='reviews-info'> <b>" . $this->numero_recensioni . "</b>" . $parolaRecensione .
-                "<br> Media voti: " . generaStelle($this->media_voti) . "</div>
-            <h2>Recensioni: </h2>";
+            $msg = "<b>" . $this->numero_recensioni . "</b>" . $parolaRecensione .
+                "<br> Media voti: " . generaStelle($this->media_voti) .
+                "<br> Emozioni più selezionate: <b>" . $this->stampaEmozioniTop() . "</b>";
+        }
+        return $msg;
+    }
+
+    // GETTER per recensioni
+    public function getRecensioni()
+    {
+        $msg = "";
+        if (!empty($this->recensioni)) {
+            $msg = "<h2>Recensioni: </h2>";
             foreach ($this->recensioni as $rec) {
                 $msg .= $rec->__toString();
             }
@@ -147,7 +202,9 @@ class Film
 
         $output = "";
         foreach ($this->personePerRuolo[$ruolo] as $item) {
-            $output .= "<div class='persona-wrapper'>";
+            $output .= "<div class='persona-wrapper";
+            $output .= ($ruolo == "Attore") ? " actor" : "";
+            $output .= "'>";
             $output .= $item->__toString();
             $output .= ($ruolo === "Attore") ? "<div class='persona-ruolo'>" . htmlspecialchars($item->getRuoloNelFilm($this->id)) . "</div>" : "";
             $output .= "</div>";
@@ -291,6 +348,7 @@ class Film
             <a href='$baseurl/dettaglio_film.php?id={$this->id}'>
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>
+                <div class='film-emotion'>".$this->stampaEmozioniTop(1)."</div>
                 <div class='film-rating'>$media</div>
             </a>
         </div>

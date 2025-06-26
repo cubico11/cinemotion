@@ -1,6 +1,7 @@
 <?php
 //importa il file config
 require_once 'config.php';
+global $conn;
 
 //funzione per testare l'input
 function test_input($data) {

@@ -1,21 +1,34 @@
 <?php
+require_once 'utente.php';
+require_once 'emozione.php';
+
 class Recensione
 {
     private int $id;
     private string $data;
     private int $voto;
     private string $testo;
-    private string $idUtente;
+    private Utente $utente;
     private int $idFilm;
+    private Emozione $emozione;
 
-    public function __construct($id, $data, $voto, $testo, $idUtente, $idFilm)
+    public function __construct(mysqli $conn, int $id)
     {
         $this->id = $id;
-        $this->data = $data;
-        $this->voto = $voto;
-        $this->testo = $testo;
-        $this->idUtente = $idUtente;
-        $this->idFilm = $idFilm;
+
+        $query = "SELECT * FROM Recensione WHERE Id = $this->id";
+        $result = $conn->query($query);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            $this->data = $row['Data'];
+            $this->voto = (int) $row['Voto'];
+            $this->testo = $row['Testo'];
+            $this->idFilm = (int) $row['Id_Film'];
+            $this->utente = new Utente($conn, $row['Id_Utente']);
+            $this->emozione = new Emozione($conn, $row['Id_Emozione']);
+        } else {
+            throw new Exception("Recensione non trovata");
+        }
     }
 
     // Getter
@@ -39,14 +52,19 @@ class Recensione
         return $this->testo;
     }
 
-    public function getIdUtente(): string
+    public function getUtente(): Utente
     {
-        return $this->idUtente;
+        return $this->utente;
     }
 
     public function getIdFilm(): int
     {
         return $this->idFilm;
+    }
+
+    public function getEmozione(): Emozione
+    {
+        return $this->emozione;
     }
 
     // Setter
@@ -70,7 +88,7 @@ class Recensione
         $this->testo = $testo;
     }
 
-    public function setUtente(string $utente): void
+    public function setUtente(Utente $utente): void
     {
         $this->utente = $utente;
     }
@@ -80,15 +98,37 @@ class Recensione
         $this->idFilm = $idFilm;
     }
 
+    public function setEmozione(Emozione $emozione): void
+    {
+        $this->emozione = $emozione;
+    }
+
     public function __toString(): string
     {
-        return "
+        $msg = "
             <div class='review'>
-                <p><strong>" . htmlspecialchars($this->idUtente) . "</strong>&ensp;
+                <p class='dati-recensione'><strong class=\"nome-account\">" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
                 <em>" . htmlspecialchars($this->data) . "</em></p>
-                <strong>" . generaStelle($this->voto) ."</strong>
-                <p>" . nl2br(htmlspecialchars($this->testo)) . "</p>
-            </div>";
+                <strong>" . generaStelle($this->voto) . "</strong>&emsp;
+                <strong>" . $this->emozione->getDenominazione() . "</strong>" ;
+                $msg .= ($this->testo != "") ? "<hr>" : "";
+                $msg .= "<p class='testo-recensione'>" . nl2br(htmlspecialchars($this->testo)) . "</p>";
+
+                if(isThisUserLogged($this->utente->getUsername())) {
+                    $msg .= "
+                    <br>
+                    <form method='POST' onsubmit=\"return confirm('Sei sicuro di voler eliminare questa recensione?');\" style='display:inline;'>
+                        <input type=\"hidden\" name=\"action\" value=\"elimina_recensione\">
+                        <input type='hidden' name='elimina_recensione' value='1'>
+                        <input type='hidden' name='id' value='" . htmlspecialchars($this->id) . "'>
+                        <button type='submit'>Elimina</button>
+                    </form>
+                ";
+                }
+            
+        $msg .= "</div>";
+
+        return $msg;
     }
 }
 ?>
