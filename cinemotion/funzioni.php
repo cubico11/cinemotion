@@ -48,6 +48,12 @@ function echoHeader($baseurl, $conn){
     echo "<header>".
         //l'immagine linka alla home solo se non si è nella home
         (($baseurl != "") ? "<a href=\"$baseurl\">" : "") . "<div class=\"logo\"><img src=\"".$baseurl."img/logo_text.png\"></div>" . (($baseurl != "") ? "</a>" : "");
+    
+    echo "<form id=\"ricerca-film\" method=\"GET\" action=\"".$baseurl."pages/ricerca_film/ricerca_film.php\">
+        <input type=\"text\" placeholder=\"Cerca un film...\" name=\"ricerca\">
+        <button type=\"submit\">Cerca</button>
+    </form>";
+
     if (!isset($_SESSION['username'])) {
         echo "<div> <a href=\"".$baseurl."pages/login/pagina_login.php\"><button class=\"login-btn\">Login</button></a> <a href=\"".$baseurl."pages/register/pagina_register.php\"><button class=\"register-btn\">Registrati</button></a> </div>";
     }

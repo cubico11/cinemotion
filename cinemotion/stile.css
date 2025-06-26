@@ -26,12 +26,12 @@ header {
 }
 
 .logo {
-    display: flex; 
+    display: flex;
     align-items: center;
 }
 
 .logo a {
-    display: flex; 
+    display: flex;
     align-items: center;
 }
 
@@ -132,7 +132,8 @@ h2 {
 }
 
 /* Dettaglio Film */
-.film-detail, .person-detail {
+.film-detail,
+.person-detail {
     display: flex;
     flex-wrap: nowrap;
     gap: 2rem;
@@ -140,7 +141,7 @@ h2 {
     filter: drop-shadow(0px 0px 15px rgb(10, 10, 10)) drop-shadow(0px 0px 25px rgba(10, 10, 10, 0.488));
 }
 
-.film-poster{
+.film-poster {
     order: 1;
     max-width: 300px;
     border-radius: 8px;
@@ -163,7 +164,8 @@ h2 {
     padding-right: 7px;
 }
 
-.film-info, .person-info {
+.film-info,
+.person-info {
     order: 2;
 }
 
@@ -178,13 +180,15 @@ h2 {
     font-size: 3.6rem;
 }
 
-.film-info p, .person-info p {
+.film-info p,
+.person-info p {
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
     color: #bbbbbb;
 }
 
-.film-info strong, .person-info strong {
+.film-info strong,
+.person-info strong {
     color: #fff;
 }
 
@@ -274,11 +278,12 @@ button {
     background-color: #29654F;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 19px;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.1s ease;
     font-weight: bold;
+    font-size: 0.9rem;
 }
 
 button:hover {
@@ -335,7 +340,7 @@ button.active {
     height: 200px;
     object-fit: cover;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .persona-info {
@@ -361,22 +366,25 @@ button.active {
     margin-top: 10px;
 }
 
-.container-login, .container-register {
+.container-login,
+.container-register {
     width: 420px;
     margin: auto auto;
     background: #1e1e1e;
     border-radius: 8px;
     padding: 24px 32px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.container-login a, .container-register a {
+.container-login a,
+.container-register a {
     text-decoration: underline;
     color: #389B77;
 }
 
-.container-login h2, .container-register h2 {
+.container-login h2,
+.container-register h2 {
     font-size: 2.8em;
     margin-bottom: 25px;
     margin-top: 21px;
@@ -393,7 +401,7 @@ button.active {
     padding: 4px;
     border-radius: 8px;
     background-color: rgb(36, 36, 36);
-    color:#fff;
+    color: #fff;
     font-size: 1em;
 }
 
@@ -404,15 +412,15 @@ button.active {
     font-size: 0.8em;
 }
 
-.light{
-    color:#888;
+.light {
+    color: #888;
 }
 
-.error{
-    color:#bd2929
+.error {
+    color: #bd2929
 }
 
-.user-info{
+.user-info {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -472,4 +480,41 @@ select {
     border: 2px solid #444;
     margin-bottom: 10px;
     font-size: 1rem;
+}
+
+#ricerca-film {
+    display: flex;
+    align-items: center;
+}
+
+#ricerca-film input[type="text"] {
+    margin-right: 10px;
+    height: 30px;
+    background-color: #1e1e1e;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid #444;
+    width: 500px;
+    font-size: 0.9em;
+    font-style: italic;
+    padding-left: 6px;
+}
+
+.found-films {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem 0;
+    justify-items: start;
+}
+
+
+.ricerca-film h1 {
+    margin-top: 40px;
+    margin-left: 60px;
+    margin-bottom: 15px;
 }
