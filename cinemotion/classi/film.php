@@ -1,6 +1,7 @@
 <?php
 require_once 'recensione.php';
 require_once 'persona.php';
+require_once 'genere.php';
 require_once __DIR__ . '\..\funzioni.php';
 
 class Film
@@ -16,6 +17,8 @@ class Film
     private $recensioni = [];
     private $personePerRuolo = [];
     private array $emozioni_top = [];
+    private array $generi = [];
+
 
 
     public function __construct($conn, $id_film)
@@ -49,6 +52,7 @@ class Film
         $this->caricaPersone($conn, "Regista");
         $this->caricaPersone($conn, "Sceneggiatore");
         $this->caricaEmozioniTop($conn);
+        $this->caricaGeneri($conn);
     }
 
     // Metodo che carica le recensioni
@@ -92,15 +96,16 @@ class Film
         return $this->emozioni_top;
     }
 
-    public function stampaEmozioniTop(int $n=3): string
+    public function stampaEmozioniTop(int $n = 3): string
     {
         $msg = "";
-        $i=0;
-        foreach($this->emozioni_top as $emozione){
-            $msg .= "<span style=\"color:". $emozione->getColorVariant("light") ."\">";
+        $i = 0;
+        foreach ($this->emozioni_top as $emozione) {
+            $msg .= "<span style=\"color:" . $emozione->getColorVariant("light") . "\">";
             $msg .= $emozione->getDenominazione() . "</span>";
             $msg .= ", ";
-            if (++$i == $n) break;
+            if (++$i == $n)
+                break;
         }
         $msg = substr($msg, 0, -2);
         return $msg;
@@ -111,7 +116,31 @@ class Film
         $this->emozioni_top = $emozioni;
     }
 
+    private function caricaGeneri(mysqli $conn): void
+    {
+        $query = "SELECT Id_Genere FROM Appartiene WHERE Id_Film = $this->id";
+        $result = $conn->query($query);
 
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $this->generi[] = new Genere($conn, intval($row['Id_Genere']));
+            }
+        }
+    }
+
+    public function getGeneri(): array
+    {
+        return $this->generi;
+    }
+
+    public function stampaGeneri(): string
+    {
+        $nomi = array_map(function ($g) {
+            return $g->getDenominazione();
+        }, $this->generi);
+
+        return implode(", ", $nomi);
+    }
 
     public function getInfoRecensioni()
     {
@@ -349,7 +378,7 @@ class Film
             <a href='$baseurl/dettaglio_film.php?id={$this->id}'>
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>
-                <div class='film-emotion'>".$this->stampaEmozioniTop(1)."</div>
+                <div class='film-emotion'>" . $this->stampaEmozioniTop(1) . "</div>
                 <div class='film-rating'>$media</div>
             </a>
         </div>

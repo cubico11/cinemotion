@@ -77,15 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_SESSION['username'])) {
     header("Location: ../login/pagina_login.php");
 }
-
-
-//definizione colori
-$dominante = $film->getEmozioniTop()[0]->getDenominazione();
-$colors = Emozione::getColorVariants();
-$base = $colors[$dominante]["base"];
-$light = $colors[$dominante]["light"];
-$dark = $colors[$dominante]["dark"];
-
 ?>
 
 <!DOCTYPE html>
@@ -160,6 +151,7 @@ $dark = $colors[$dominante]["dark"];
                 </div>
                 <p><strong>Durata:</strong> <?php echo $film->getDurataFormattata(); ?></p>
                 <p><strong>Data uscita:</strong> <?php echo $film->getDataUscitaTesto(); ?></p>
+                <p><strong>Generi:</strong> <?php echo $film->stampaGeneri(); ?></p>
             </div>
         </div>
         <div id="toggle-buttons" class="toggle-buttons">
