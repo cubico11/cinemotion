@@ -1,4 +1,6 @@
 <?php
+include_once 'funzioni_connessione.php';
+
 function generaStelle($n): string
 {
     if(is_null($n)){
@@ -42,6 +44,18 @@ function isThisUserLogged(string $user): bool {
     }
 
     return isset($_SESSION['username']) && strcasecmp($user, $_SESSION['username']) === 0;
+}
+
+function isThisUserAdmin(string $user, $conn): bool{
+    $result = $conn->query("SELECT isAdmin FROM Users WHERE username = '$user'");
+
+    while($row = $result->fetch_assoc()){
+        if($row['isAdmin'] == 1) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 function echoHeader($baseurl, $conn){

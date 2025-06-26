@@ -105,6 +105,7 @@ class Recensione
 
     public function __toString(): string
     {
+        global $conn;
         $msg = "
             <div class='review'>
                 <p class='dati-recensione'><strong class=\"nome-account\">" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
@@ -114,13 +115,14 @@ class Recensione
                 $msg .= ($this->testo != "") ? "<hr>" : "";
                 $msg .= "<p class='testo-recensione'>" . nl2br(htmlspecialchars($this->testo)) . "</p>";
 
-                if(isThisUserLogged($this->utente->getUsername())) {
+                if(isThisUserLogged($this->utente->getUsername()) || isThisUserAdmin($_SESSION['username'], $conn)) {
                     $msg .= "
                     <br>
                     <form method='POST' onsubmit=\"return confirm('Sei sicuro di voler eliminare questa recensione?');\" style='display:inline;'>
                         <input type=\"hidden\" name=\"action\" value=\"elimina_recensione\">
                         <input type='hidden' name='elimina_recensione' value='1'>
                         <input type='hidden' name='id' value='" . htmlspecialchars($this->id) . "'>
+                        <input type='hidden' name='id_utente' value='" . htmlspecialchars($this->utente->getId()) . "'>
                         <button type='submit'>Elimina</button>
                     </form>
                 ";
