@@ -78,4 +78,5 @@ function echoHeader($baseurl, $conn){
     }
     echo "</header>";
 }
+
 ?>

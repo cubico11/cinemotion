@@ -78,6 +78,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
     header("Location: ../login/pagina_login.php");
 }
 
+
+//definizione colori
+$dominante = $film->getEmozioniTop()[0]->getDenominazione();
+$colors = Emozione::getColorVariants();
+$base = $colors[$dominante]["base"];
+$light = $colors[$dominante]["light"];
+$dark = $colors[$dominante]["dark"];
+
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
     <link rel="icon" href="../../img/logo.png" type="image/x-icon">
 
     <style>
-        <style>body {
+        body {
             position: relative;
         }
 
@@ -117,6 +125,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             z-index: 1;
             backdrop-filter: blur(0px);
         }
+
+        /*body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background:
+                <?php //echo $dark ?>
+            ;
+            background: linear-gradient(to top left,
+                    <?php //echo $dark ?>
+                    , #121212);
+        }*/
     </style>
 </head>
 
