@@ -76,7 +76,6 @@ class Film
         WHERE r.Id_Film = $this->id
         GROUP BY e.Id
         ORDER BY Totale DESC
-        LIMIT 3
     ";
 
         $result = $conn->query($query);
@@ -98,7 +97,9 @@ class Film
         $msg = "";
         $i=0;
         foreach($this->emozioni_top as $emozione){
-            $msg .= $emozione->getDenominazione() . ", ";
+            $msg .= "<span style=\"color:". $emozione->getColorVariant("light") ."\">";
+            $msg .= $emozione->getDenominazione() . "</span>";
+            $msg .= ", ";
             if (++$i == $n) break;
         }
         $msg = substr($msg, 0, -2);

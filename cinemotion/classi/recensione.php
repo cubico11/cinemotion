@@ -110,8 +110,8 @@ class Recensione
             <div class='review'>
                 <p class='dati-recensione'><strong class=\"nome-account\">" . htmlspecialchars($this->utente->getUsername()) . "</strong>&ensp;
                 <em>" . htmlspecialchars($this->data) . "</em></p>
-                <strong>" . generaStelle($this->voto) . "</strong>&emsp;
-                <strong>" . $this->emozione->getDenominazione() . "</strong>" ;
+                <strong style=\"color:". $this->emozione->getColorVariant("light") ."\">" . generaStelle($this->voto) . "</strong>&emsp;
+                <strong style=\"color:". $this->emozione->getColorVariant("light") ."\">" . $this->emozione->getDenominazione() . "</strong>" ;
                 $msg .= ($this->testo != "") ? "<hr>" : "";
                 $msg .= "<p class='testo-recensione'>" . nl2br(htmlspecialchars($this->testo)) . "</p>";
 
