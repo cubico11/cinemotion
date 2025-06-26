@@ -56,29 +56,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
 
     //codice per eliminare la recensione
     elseif ($action === 'elimina_recensione') {
-        $username = $conn->real_escape_string($_SESSION['username']);
         $id_recensione = intval($_POST['id']);
 
-        // Recupera l'id dell'utente
-        $query_user = "SELECT Id FROM Users WHERE Username = '$username'";
-        $result_user = $conn->query($query_user);
+        $id_utente = intval($_POST['id_utente']);
 
-        if ($result_user && $row = $result_user->fetch_assoc()) {
-            $id_utente = intval($row['Id']);
-
-            // Cancella la recensione
-            $query_delete = "DELETE FROM Recensione WHERE Id = $id_recensione AND Id_Utente = $id_utente";
-            if ($conn->query($query_delete)) {
-                echo "<script>
+        // Cancella la recensione
+        $query_delete = "DELETE FROM Recensione WHERE Id = $id_recensione AND Id_Utente = $id_utente";
+        if ($conn->query($query_delete)) {
+            echo "<script>
                         alert('Recensione eliminata.');
                         window.location.href = 'dettaglio_film.php?id=" . $_GET['id'] . "';
                     </script>";
-            } else {
-                echo "<script>alert('Errore durante l\'eliminazione.');</script>";
-            }
         } else {
-            echo "<script>alert('Utente non valido.');</script>";
+            echo "<script>alert('Errore durante l\'eliminazione.');</script>";
         }
+    } else {
+        echo "<script>alert('Utente non valido.');</script>";
+
     }
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_SESSION['username'])) {
     header("Location: ../login/pagina_login.php");
@@ -161,8 +155,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
                 Voto: <input type="number" name="voto" required min="0,5" step=".5" max="5"> </br>
                 Emozione: <select name="emozione">
                     <?php $result = $conn->query("SELECT id, denominazione FROM emozione");
-                    while($row = $result->fetch_assoc()) {
-                        echo "<option value=\"".$row['id']."\">".$row['denominazione']."</option>";
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value=\"" . $row['id'] . "\">" . $row['denominazione'] . "</option>";
                     } ?>
                 </select>
                 <textarea name="recensione" id="text-recensione" maxlength="1000"
