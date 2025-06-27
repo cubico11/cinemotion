@@ -115,7 +115,7 @@ class Recensione
                 $msg .= ($this->testo != "") ? "<hr>" : "";
                 $msg .= "<p class='testo-recensione'>" . nl2br(htmlspecialchars($this->testo)) . "</p>";
 
-                if(isThisUserLogged($this->utente->getUsername()) || isThisUserAdmin($_SESSION['username'], $conn)) {
+                if(isThisUserLogged($this->utente->getUsername()) || isThisUserAdmin(isset($_SESSION['username']) ? $_SESSION['username'] : "", $conn)) {
                     $msg .= "
                     <br>
                     <form method='POST' onsubmit=\"return confirm('Sei sicuro di voler eliminare questa recensione?');\" style='display:inline;'>
