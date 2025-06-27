@@ -36,6 +36,7 @@ $repo = new FilmRepository($conn);
                         <?php
                         $generi = Genere::getTuttiConConteggio($conn);
                         foreach ($generi  as $genere) {
+                            $selected = (isset($_GET['genere']) && $_GET['genere'] == $genere['id']) ? 'selected' : '';
                             echo "<option value='". $genere['id'] ."' $selected>". $genere['denominazione'] ." (". $genere['numeroFilm'] .")</option>";
                         }
                         ?>
