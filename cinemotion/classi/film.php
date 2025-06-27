@@ -71,22 +71,42 @@ class Film
         }
     }
 
+    //carica la top 3 di emozioni più selezionate, MA se ce ne sono di pari le aggiunge comunque senza contare il limite di 3
     private function caricaEmozioniTop($conn)
     {
         $query = "
-        SELECT e.Id, e.Denominazione, COUNT(*) AS Totale
-        FROM Emozione e
-        JOIN Recensione r ON e.id = r.id_emozione
-        WHERE r.Id_Film = $this->id
-        GROUP BY e.Id
-        ORDER BY Totale DESC
-    ";
+            SELECT e.Id, e.Denominazione, COUNT(*) AS Totale
+            FROM Emozione e
+            JOIN Recensione r ON e.id = r.id_emozione
+            WHERE r.Id_Film = $this->id
+            GROUP BY e.Id
+            ORDER BY Totale DESC
+        ";
 
         $result = $conn->query($query);
         if ($result) {
-            $i = 0;
+            $emozioni = [];
             while ($row = $result->fetch_assoc()) {
-                $this->emozioni_top[] = new Emozione($conn, $row['Id']);
+                $emozioni[] = [
+                    'id' => $row['Id'],
+                    'denominazione' => $row['Denominazione'],
+                    'totale' => (int) $row['Totale']
+                ];
+            }
+
+            // Trova la soglia di count per la top 3
+            $soglia = 0;
+            if (count($emozioni) >= 3) {
+                $soglia = $emozioni[2]['totale'];
+            }
+
+            // Includi tutte quelle >= soglia
+            foreach ($emozioni as $e) {
+                if ($e['totale'] >= $soglia) {
+                    $this->emozioni_top[] = new Emozione($conn, $e['id']);
+                } else {
+                    break;
+                }
             }
         }
     }
@@ -379,7 +399,7 @@ class Film
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>
                 <div class='film-emotion'>" . $this->stampaEmozioniTop(1) . "</div>
-                <div class='film-rating'>$media</div>
+                <div class='film-rating'>$media (" . count($this->recensioni) . ")</div>
             </a>
         </div>
         ";

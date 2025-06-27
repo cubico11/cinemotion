@@ -1,90 +1,90 @@
 /* Variabili globali - colori per ciascuna emozione */
 
 :root {
-  /* Felicità */
-  --emotion-happy-light: #ffeb80;
-  --emotion-happy: #ffd700;
-  --emotion-happy-dark: #caa800;
+    /* Felicità */
+    --emotion-happy-light: #ffeb80;
+    --emotion-happy: #ffd700;
+    --emotion-happy-dark: #caa800;
 
-  /* Tristezza */
-  --emotion-sad-light: #9ecfff;
-  --emotion-sad: #1e90ff;
-  --emotion-sad-dark: #00509e;
+    /* Tristezza */
+    --emotion-sad-light: #9ecfff;
+    --emotion-sad: #1e90ff;
+    --emotion-sad-dark: #00509e;
 
-  /* Rabbia */
-  --emotion-angry-light: #ff9480;
-  --emotion-angry: #ff2a00;
-  --emotion-angry-dark: #801500;
+    /* Rabbia */
+    --emotion-angry-light: #ff9480;
+    --emotion-angry: #ff2a00;
+    --emotion-angry-dark: #801500;
 
-  /* Paura */
-  --emotion-scared-light: #c89df2;
-  --emotion-scared: #8a2ce3;
-  --emotion-scared-dark: #49117f;
+    /* Paura */
+    --emotion-scared-light: #c89df2;
+    --emotion-scared: #8a2ce3;
+    --emotion-scared-dark: #49117f;
 
-  /* Sorpresa */
-  --emotion-surprised-light: #f1f195;
-  --emotion-surprised: #e3e324;
-  --emotion-surprised-dark: #8e8e0b;
+    /* Sorpresa */
+    --emotion-surprised-light: #f1f195;
+    --emotion-surprised: #e3e324;
+    --emotion-surprised-dark: #8e8e0b;
 
-  /* Disgusto */
-  --emotion-disgusted-light: #c4f740;
-  --emotion-disgusted: #81b107;
-  --emotion-disgusted-dark: #283602;
+    /* Disgusto */
+    --emotion-disgusted-light: #c4f740;
+    --emotion-disgusted: #81b107;
+    --emotion-disgusted-dark: #283602;
 
-  /* Speranza */
-  --emotion-hopeful-light: #f1ce9b;
-  --emotion-hopeful: #e2962b;
-  --emotion-hopeful-dark: #9c600b;
+    /* Speranza */
+    --emotion-hopeful-light: #f1ce9b;
+    --emotion-hopeful: #e2962b;
+    --emotion-hopeful-dark: #9c600b;
 
-  /* Ansia */
-  --emotion-anxious-light: #f19bdd;
-  --emotion-anxious: #e22bb7;
-  --emotion-anxious-dark: #7c1163;
+    /* Ansia */
+    --emotion-anxious-light: #f19bdd;
+    --emotion-anxious: #e22bb7;
+    --emotion-anxious-dark: #7c1163;
 
-  /* Serenità */
-  --emotion-serene-light: #cffef7;
-  --emotion-serene: #53fae1;
-  --emotion-serene-dark: #06c8ab;
+    /* Serenità */
+    --emotion-serene-light: #cffef7;
+    --emotion-serene: #53fae1;
+    --emotion-serene-dark: #06c8ab;
 
-  /* Frustrazione */
-  --emotion-frustrated-light: #fa8e41;
-  --emotion-frustrated: #b64f05;
-  --emotion-frustrated-dark: #491e00;
+    /* Frustrazione */
+    --emotion-frustrated-light: #fa8e41;
+    --emotion-frustrated: #b64f05;
+    --emotion-frustrated-dark: #491e00;
 
-  /* Nostalgia */
-  --emotion-nostalgic-light: #6d6dca;
-  --emotion-nostalgic: #313186;
-  --emotion-nostalgic-dark: #0f0f29;
+    /* Nostalgia */
+    --emotion-nostalgic-light: #6d6dca;
+    --emotion-nostalgic: #313186;
+    --emotion-nostalgic-dark: #0f0f29;
 
-  /* Confusione */
-  --emotion-confused-light: #c0adb5;
-  --emotion-confused: #866775;
-  --emotion-confused-dark: #3e3036;
+    /* Confusione */
+    --emotion-confused-light: #c0adb5;
+    --emotion-confused: #866775;
+    --emotion-confused-dark: #3e3036;
 
-  /* Tensione */
-  --emotion-tense-light: #63ff69;
-  --emotion-tense: #00e308;
-  --emotion-tense-dark: #006304;
+    /* Tensione */
+    --emotion-tense-light: #63ff69;
+    --emotion-tense: #00e308;
+    --emotion-tense-dark: #006304;
 
-  /* Sconforto */
-  --emotion-uncomfortable-light: #ca825a;
-  --emotion-uncomfortable: #7d4628;
-  --emotion-uncomfortable-dark: #1c1009;
+    /* Sconforto */
+    --emotion-uncomfortable-light: #ca825a;
+    --emotion-uncomfortable: #7d4628;
+    --emotion-uncomfortable-dark: #1c1009;
 
-  /* Soddisfazione */
-  --emotion-satisfied-light: #fdfaea;
-  --emotion-satisfied: #f3de75;
-  --emotion-satisfied-dark: #d6b513;
+    /* Soddisfazione */
+    --emotion-satisfied-light: #fdfaea;
+    --emotion-satisfied: #f3de75;
+    --emotion-satisfied-dark: #d6b513;
 
-  /* Interesse */
-  --emotion-interested-light: #80f0bb;
-  --emotion-interested: #1ad67e;
-  --emotion-interested-dark: #0c643b;
+    /* Interesse */
+    --emotion-interested-light: #80f0bb;
+    --emotion-interested: #1ad67e;
+    --emotion-interested-dark: #0c643b;
 
-  /* Noia */
-  --emotion-bored-light: #eeecf7;
-  --emotion-bored: #a292d1;
-  --emotion-bored-dark: #5b44a0;
+    /* Noia */
+    --emotion-bored-light: #eeecf7;
+    --emotion-bored: #a292d1;
+    --emotion-bored-dark: #5b44a0;
 }
 
 
@@ -490,7 +490,7 @@ button.active {
     margin: 3px;
     padding: 4px;
     border-radius: 8px;
-    background-color: rgb(36, 36, 36);
+    background-color: #242424;
     color: #fff;
     font-size: 1em;
 }
@@ -586,8 +586,24 @@ select {
     border: 2px solid #444;
     width: 500px;
     font-size: 0.9em;
-    font-style: italic;
     padding-left: 6px;
+}
+
+/* Rende i placeholder corsivi nelle textbox */
+::-webkit-input-placeholder {
+    font-style: italic;
+}
+
+:-moz-placeholder {
+    font-style: italic;
+}
+
+::-moz-placeholder {
+    font-style: italic;
+}
+
+:-ms-input-placeholder {
+    font-style: italic;
 }
 
 .found-films {
@@ -607,4 +623,39 @@ select {
     margin-top: 40px;
     margin-left: 60px;
     margin-bottom: 15px;
+}
+
+#container-filtri {
+    background-color: #181818;
+    border-bottom: 1px solid #222;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#form-filtri {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px 0;
+    margin: 20px 0;
+}
+
+#filtri {
+    display: flex;
+    gap: 15px;
+}
+
+#form-filtri div div {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#form-filtri div select {
+    margin: 0;
+}
+
+#form-filtri label {
+    font-weight: bold;
 }

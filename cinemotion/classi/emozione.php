@@ -5,6 +5,20 @@ class Emozione
     private int $id;
     private string $denominazione;
 
+    //funzione che restituisce tutte le emozioni
+    public static function getAll($conn): array
+    {
+        $query = "SELECT Id FROM Emozione";
+        $result = $conn->query($query);
+        $emozioni = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $emozioni[] = new Emozione($conn, $row['Id']);
+        }
+
+        return $emozioni;
+    }
+
     public function __construct(mysqli $conn, int $id)
     {
         $this->id = $id;
@@ -136,6 +150,53 @@ class Emozione
     {
         $colors = self::getColorVariants();
         return $colors[$this->denominazione][$variant] ?? "inherit";
+    }
+
+    // stessa logica di caricaEmozioniTop() in film:
+    // carica la top 3 di emozioni più selezionate, MA se ce ne sono di pari le aggiunge comunque senza contare il limite di 3
+    // non si può utilizzare getEmozioniTop() per ogni film all'interno di questo metodo perché sarebbe troppo pesante
+    public function getNFilm(mysqli $conn): int
+    {
+        $filmEmozioni = [];
+
+        // Step 1: Ottieni i conteggi emozioni per ogni film
+        $query = "
+        SELECT id_film, id_emozione, COUNT(*) as count_emozione
+        FROM Recensione
+        GROUP BY id_film, id_emozione
+    ";
+
+        $result = $conn->query($query);
+        if (!$result)
+            return 0;
+
+        while ($row = $result->fetch_assoc()) {
+            $id_film = (int) $row['id_film'];
+            $id_emozione = (int) $row['id_emozione'];
+            $count = (int) $row['count_emozione'];
+
+            $filmEmozioni[$id_film][] = ['id_emozione' => $id_emozione, 'count' => $count];
+        }
+
+        $filmCount = 0;
+
+        foreach ($filmEmozioni as $emozioni) {
+            usort($emozioni, function ($a, $b) {
+                return $b['count'] - $a['count']; // decrescente
+            });
+
+            // Trova la soglia minima (3° posto)
+            $soglia = isset($emozioni[2]) ? $emozioni[2]['count'] : 0;
+
+            foreach ($emozioni as $e) {
+                if ($e['count'] >= $soglia && $e['id_emozione'] === (int) $this->id) {
+                    $filmCount++;
+                    break;
+                }
+            }
+        }
+
+        return $filmCount;
     }
 }
 ?>
