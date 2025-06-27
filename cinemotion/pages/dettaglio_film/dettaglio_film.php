@@ -188,7 +188,7 @@ else{
             <form id="form-recensione" action="" method="POST">
                 <input type="hidden" name="action" value="inserisci_recensione">
                 <h2>Inserisci una recensione:</h2>
-                Voto: <input type="number" name="voto" required min="0,5" step=".5" max="5"> </br>
+                Voto: <input type="number" name="voto" required min="0.5" step=".5" max="5"> </br>
                 Emozione: <select name="emozione">
                     <?php $result = $conn->query("SELECT id, denominazione FROM emozione");
                     while ($row = $result->fetch_assoc()) {
