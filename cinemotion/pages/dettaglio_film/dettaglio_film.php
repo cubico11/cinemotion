@@ -77,6 +77,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
 } elseif ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_SESSION['username'])) {
     header("Location: ../login/pagina_login.php");
 }
+
+/*
+//colori dell'emozione dominante (se esiste)
+if (count($film->getEmozioniTop()) > 0) {
+    $dominante = $film->getEmozioniTop()[0]->getDenominazione();
+    $colors = Emozione::getColorVariants();
+    $base = $colors[$dominante]["base"];
+    $light = $colors[$dominante]["light"];
+    $dark = $colors[$dominante]["dark"];
+}
+else{
+    $base = "#343434";
+    $light = "#282828";
+    $dark = "#1f1f1f";
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -126,12 +141,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['username'])) {
             height: 100vh;
             z-index: -1;
             background:
-                <?php //echo $dark ?>
-            ;
-            background: linear-gradient(to top left,
-                    <?php //echo $dark ?>
-                    , #121212);
-        }*/
+                linear-gradient(to bottom right, rgba(12, 12, 12, 1), rgba(16, 16, 16, 0.9)),
+                linear-gradient(to top left,
+                    <?php echo $dark ?>
+                    , #1f1f1f);
+
+            /*linear-gradient(to top right,
+                    <?php //echo $colors[$film->getEmozioniTop()[1]->getDenominazione()]["dark"]; ?>
+            ,
+            #1f1f1f);
+            */
+        }
     </style>
 </head>
 

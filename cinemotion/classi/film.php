@@ -390,11 +390,17 @@ class Film
     //stampa scheda del film; baseurl è l'inizio del percorso relativo rispetto alla pagina che chiama la funzione
     public function renderCard($baseurl): string
     {
+        $dominante = $this->getEmozioniTop()[0]->getDenominazione();
+        $colors = Emozione::getColorVariants();
+        $base = $colors[$dominante]["base"];
+        $light = $colors[$dominante]["light"];
+        $dark = $colors[$dominante]["dark"];
+
         $titolo = htmlspecialchars($this->titolo);
         $media = generaStelle($this->media_voti);
 
         return "
-        <div class='film'>
+        <div class='film' style='background: linear-gradient(rgba(34, 34, 34, 0.98), rgba(21, 21, 21, 0.93)), linear-gradient(to top left, $dark, #1f1f1f)'>
             <a href='$baseurl/dettaglio_film.php?id={$this->id}'>
                 <img src='data:image/jpeg;base64," . base64_encode($this->immagine) . "'>
                 <div class='film-title'>$titolo</div>

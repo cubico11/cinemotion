@@ -183,11 +183,16 @@ h2 {
     height: 350px;
     flex: 0 0 auto;
     background-color: #1f1f1f;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 0.5rem;
     scroll-snap-align: start;
     text-align: center;
     transition: 0.15s ease;
+}
+
+.film a {
+    display: inline-block;
+    height: 100%;
 }
 
 .film p {
