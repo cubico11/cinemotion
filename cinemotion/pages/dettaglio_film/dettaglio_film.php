@@ -143,15 +143,14 @@ else{
             background:
                 linear-gradient(to bottom right, rgba(12, 12, 12, 1), rgba(16, 16, 16, 0.9)),
                 linear-gradient(to top left,
-                    <?php echo $dark ?>
+                    <?php //echo $dark ?>
                     , #1f1f1f);
 
             /*linear-gradient(to top right,
                     <?php //echo $colors[$film->getEmozioniTop()[1]->getDenominazione()]["dark"]; ?>
             ,
             #1f1f1f);
-            */
-        }
+        }*/
     </style>
 </head>
 
